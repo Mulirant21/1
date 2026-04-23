@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iridium Flips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #fbf4eb;
+        --panel: #fffdfa;
+        --panel-2: #fff8f1;
+        --line: #ecd8c5;
+        --text: #1d1a17;
+        --muted: #aa8568;
+        --muted-2: #c7a489;
+        --accent: #ff7a2f;
+        --accent-2: #ff955b;
+        --danger: #cc5f2d;
+        --success: #6d8f55;
+        --shadow: 0 18px 50px rgba(201, 167, 137, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(180deg, #fffaf5 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 28px));
+        margin: 0 auto;
+      }
+
+      .auth-screen {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 26px 0;
+      }
+
+      .auth-card {
+        width: min(900px, 100%);
+        background: rgba(255, 253, 249, 0.96);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 72px 56px 52px;
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+
+      .auth-top {
+        font-size: 11px;
+        letter-spacing: 0.75em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 90px;
+      }
+
+      .auth-title {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 40px);
+        font-weight: 400;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+      }
+
+      .accent-line {
+        width: 98px;
+        height: 4px;
+        border-radius: 999px;
+        background: var(--accent);
+        margin: 26px auto 34px;
+      }
+
+      .auth-sub {
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 34px;
+      }
+
+      .auth-box {
+        width: min(100%, 590px);
+        margin: 0 auto;
+      }
+
+      .pass-input {
+        width: 100%;
+        height: 76px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: transparent;
+        text-align: center;
+        font-size: 32px;
+        letter-spacing: 0.55em;
+        color: #a88369;
+        padding-left: 0.55em;
+        outline: none;
+      }
+
+      .pass-input::placeholder {
+        color: #b79276;
+      }
+
+      .pass-input:focus {
+        border-color: #eab893;
+        box-shadow: 0 0 0 4px rgba(255, 122, 47, 0.08);
+        background: #fffdfa;
+      }
+
+      .auth-btn,
+      .btn,
+      .ghost-btn {
+        border-radius: 14px;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .auth-btn {
+        width: 100%;
+        height: 76px;
+        margin-top: 28px;
+        border: 1.5px solid var(--accent);
+        background: transparent;
+        color: var(--accent);
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.5em;
+        text-transform: uppercase;
+      }
+
+      .auth-btn:hover {
+        background: #fff1e8;
+      }
+
+      .status {
+        min-height: 22px;
+        margin-top: 18px;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .status.error {
+        color: var(--danger);
+      }
+
+      .status.success {
+        color: var(--success);
+      }
+
+      .auth-bottom {
+        margin-top: 26px;
+      }
+
+      .shield {
+        width: 28px;
+        height: 28px;
+        margin: 0 auto 12px;
+        border: 1.5px solid #f2b889;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #f2a96e;
+        font-size: 13px;
+      }
+
+      .auth-footer {
+        font-size: 12px;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .app {
+        min-height: 100vh;
+        padding: 18px 0 36px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 12px 0 20px;
+      }
+
+      .brand small {
+        display: block;
+        font-size: 11px;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .brand strong {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .top-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn,
+      .ghost-btn {
+        height: 46px;
+        padding: 0 18px;
+        border: 1px solid var(--line);
+      }
+
+      .btn {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 12px 28px rgba(255, 122, 47, 0.18);
+      }
+
+      .ghost-btn {
+        background: rgba(255, 253, 249, 0.8);
+        color: var(--text);
+      }
+
+      .hero {
+        background: rgba(255, 253, 249, 0.9);
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        padding: 34px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        font-size: 11px;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .hero h1 {
+        margin: 14px 0 0;
+        font-size: clamp(32px, 5vw, 54px);
+        line-height: 1.06;
+        letter-spacing: -0.04em;
+      }
+
+      .hero p {
+        margin: 16px 0 0;
+        max-width: 650px;
+        color: #725f50;
+        line-height: 1.75;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .stat-card,
+      .section,
+      .quick-card,
+      .note-card,
+      .tool-card,
+      .list-card {
+        background: rgba(255, 253, 249, 0.92);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+      }
+
+      .stat-card {
+        padding: 18px;
+      }
+
+      .stat-card strong {
+        display: block;
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      .stat-card span {
+        font-size: 12px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .sidebar,
+      .content {
+        min-width: 0;
+      }
+
+      .section {
+        padding: 18px;
+      }
+
+      .section-title {
+        margin: 0 0 16px;
+        font-size: 13px;
+        letter-spacing: 0.25em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+
+      .nav-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        width: 100%;
+        text-align: left;
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--text);
+        border-radius: 16px;
+        padding: 14px;
+        cursor: pointer;
+      }
+
+      .nav-btn.active {
+        border-color: #f2b889;
+        background: #fff4ea;
+        color: var(--accent);
+      }
+
+      .panel {
+        display: none;
+      }
+
+      .panel.active {
+        display: block;
+      }
+
+      .cards-3,
+      .cards-2,
+      .tools-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .cards-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .cards-2,
+      .tools-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .quick-card,
+      .note-card,
+      .tool-card,
+      .list-card {
+        padding: 20px;
+      }
+
+      .quick-card h3,
+      .note-card h3,
+      .tool-card h3,
+      .list-card h3 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+
+      .quick-card p,
+      .note-card p,
+      .tool-card p,
+      .list-card p,
+      .list-card li {
+        margin: 0;
+        line-height: 1.7;
+        color: #715e50;
+      }
+
+      .tool-meta {
+        margin-top: 14px;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .form-row {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .field label {
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .field input,
+      .field textarea,
+      .field select {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: white;
+        padding: 14px 15px;
+        outline: none;
+        color: var(--text);
+      }
+
+      .field textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .field input:focus,
+      .field textarea:focus,
+      .field select:focus {
+        border-color: #f0b48c;
+        box-shadow: 0 0 0 4px rgba(255, 122, 47, 0.08);
+      }
+
+      .task-list,
+      .notes-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .task-item,
+      .note-item {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fffdfb;
+      }
+
+      .task-item strong,
+      .note-item strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .toolbar {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      ul.clean {
+        padding-left: 18px;
+        margin: 10px 0 0;
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid,
+        .grid,
+        .cards-3,
+        .cards-2,
+        .tools-grid,
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .auth-card {
+          padding: 48px 22px 34px;
+        }
+
+        .auth-top {
+          margin-bottom: 58px;
+          letter-spacing: 0.45em;
+          line-height: 1.8;
+        }
+
+        .auth-title {
+          letter-spacing: 0.28em;
+          font-size: 28px;
+        }
+
+        .auth-sub,
+        .auth-footer,
+        .auth-btn {
+          letter-spacing: 0.22em;
+        }
+
+        .pass-input {
+          height: 68px;
+          font-size: 28px;
+          letter-spacing: 0.45em;
+          padding-left: 0.45em;
+        }
+
+        .auth-btn {
+          height: 68px;
+        }
+
+        .hero,
+        .section {
+          padding: 18px;
+        }
+
+        .brand strong {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section id="authScreen" class="auth-screen shell">
+      <div style="width:100%">
+        <div class="auth-card">
+          <div class="auth-top">Flips by Creepiamond</div>
+          <h1 class="auth-title">Authentication</h1>
+          <div class="accent-line"></div>
+          <div class="auth-sub">Please type the flipcode for secured flips</div>
+
+          <div class="auth-box">
+            <input id="flipcode" class="pass-input" type="password" maxlength="5" placeholder="•••••" autocomplete="off" />
+            <button id="loginBtn" class="auth-btn">Authorize</button>
+            <div id="authStatus" class="status"></div>
+          </div>
+        </div>
+
+        <div class="auth-bottom">
+          <div class="shield">⌂</div>
+          <div class="auth-footer">Secure. Private. Encrypted.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="appScreen" class="app hidden">
+      <div class="shell">
+        <header class="topbar">
+          <div class="brand">
+            <small>Vault by Creepiamond</small>
+            <strong>Iridium Flips Dashboard</strong>
+          </div>
+          <div class="top-actions">
+            <button class="ghost-btn" id="refreshBtn">Refresh View</button>
+            <button class="btn" id="logoutBtn">Logout</button>
+          </div>
+        </header>
+
+        <section class="hero">
+          <div class="hero-grid">
+            <div>
+              <span class="eyebrow">Private member area</span>
+              <h1>Welcome back. Your secured flips workspace is ready.</h1>
+              <p>
+                After login, members can view strategies, manage private notes, add tasks,
+                track flips, and use simple tools from one clean interface.
+              </p>
+            </div>
+            <div class="stats">
+              <div class="stat-card">
+                <strong id="statTasks">0</strong>
+                <span>Saved tasks</span>
+              </div>
+              <div class="stat-card">
+                <strong id="statNotes">0</strong>
+                <span>Private notes</span>
+              </div>
+              <div class="stat-card">
+                <strong>4</strong>
+                <span>Member sections</span>
+              </div>
+              <div class="stat-card">
+                <strong>Live</strong>
+                <span>Session status</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="grid">
+          <aside class="sidebar">
+            <section class="section">
+              <h2 class="section-title">Workspace</h2>
+              <div class="nav-list">
+                <button class="nav-btn active" data-panel="dashboard">Dashboard</button>
+                <button class="nav-btn" data-panel="strategies">Strategies</button>
+                <button class="nav-btn" data-panel="tasks">Tasks</button>
+                <button class="nav-btn" data-panel="notes">Private Notes</button>
+                <button class="nav-btn" data-panel="tools">Tools</button>
+              </div>
+            </section>
+          </aside>
+
+          <main class="content">
+            <section id="dashboard" class="panel active section">
+              <div class="toolbar">
+                <div>
+                  <h2 style="margin:0">Dashboard Overview</h2>
+                  <div class="muted">Quick access to your private member area.</div>
+                </div>
+              </div>
+              <div class="cards-3">
+                <article class="quick-card">
+                  <h3>Secured Flips</h3>
+                  <p>Keep premium listings, member-only opportunities, and gated information in one place.</p>
+                  <div class="tool-meta">Private Area</div>
+                </article>
+                <article class="quick-card">
+                  <h3>Crafting</h3>
+                  <p>Use this section for process notes, packaging ideas, sourcing workflows, and quality checks.</p>
+                  <div class="tool-meta">Creative Workflow</div>
+                </article>
+                <article class="quick-card">
+                  <h3>Buy / Sell</h3>
+                  <p>Track pricing ideas, item status, and action plans without leaving the site.</p>
+                  <div class="tool-meta">Trading Space</div>
+                </article>
+              </div>
+            </section>
+
+            <section id="strategies" class="panel section">
+              <div class="toolbar">
+                <div>
+                  <h2 style="margin:0">Strategies</h2>
+                  <div class="muted">Example members-only content blocks.</div>
+                </div>
+              </div>
+              <div class="cards-2">
+                <article class="list-card">
+                  <h3>Low-Risk Flip Strategy</h3>
+                  <p>Focus on fast-turn items with clear demand, strong margins, and repeatable sourcing.</p>
+                  <ul class="clean">
+                    <li>Target established categories</li>
+                    <li>Use fixed margin thresholds</li>
+                    <li>Avoid long holding periods</li>
+                  </ul>
+                </article>
+                <article class="list-card">
+                  <h3>Premium Hold Strategy</h3>
+                  <p>Use for higher-end items that need stronger branding, better photos, and slower exits.</p>
+                  <ul class="clean">
+                    <li>Improve presentation quality</li>
+                    <li>Build scarcity into the listing</li>
+                    <li>Set a firm minimum price</li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+
+            <section id="tasks" class="panel section">
+              <div class="toolbar">
+                <div>
+                  <h2 style="margin:0">Tasks</h2>
+                  <div class="muted">Add and manage your post-login workflow.</div>
+                </div>
+              </div>
+              <div class="note-card">
+                <div class="form-row">
+                  <div class="field">
+                    <label for="taskTitle">Task title</label>
+                    <input id="taskTitle" type="text" placeholder="Example: Package today orders" />
+                  </div>
+                  <div class="field">
+                    <label for="taskPriority">Priority</label>
+                    <select id="taskPriority">
+                      <option>Low</option>
+                      <option selected>Medium</option>
+                      <option>High</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn" id="addTaskBtn">Add Task</button>
+                <div id="taskList" class="task-list"></div>
+              </div>
+            </section>
+
+            <section id="notes" class="panel section">
+              <div class="toolbar">
+                <div>
+                  <h2 style="margin:0">Private Notes</h2>
+                  <div class="muted">Write and save member notes in the browser.</div>
+                </div>
+              </div>
+              <div class="note-card">
+                <div class="field">
+                  <label for="noteTitle">Note title</label>
+                  <input id="noteTitle" type="text" placeholder="Example: Friday sourcing ideas" />
+                </div>
+                <div class="field">
+                  <label for="noteBody">Note body</label>
+                  <textarea id="noteBody" placeholder="Write your private note here..."></textarea>
+                </div>
+                <button class="btn" id="saveNoteBtn">Save Note</button>
+                <div id="notesList" class="notes-list"></div>
+              </div>
+            </section>
+
+            <section id="tools" class="panel section">
+              <div class="toolbar">
+                <div>
+                  <h2 style="margin:0">Tools</h2>
+                  <div class="muted">Small utilities users can use after logging in.</div>
+                </div>
+              </div>
+              <div class="tools-grid">
+                <article class="tool-card">
+                  <h3>Profit Calculator</h3>
+                  <div class="field">
+                    <label for="buyPrice">Buy price</label>
+                    <input id="buyPrice" type="number" placeholder="0" />
+                  </div>
+                  <div class="field">
+                    <label for="sellPrice">Sell price</label>
+                    <input id="sellPrice" type="number" placeholder="0" />
+                  </div>
+                  <button class="btn" id="calcBtn">Calculate</button>
+                  <p id="calcResult" style="margin-top:14px">Enter numbers to calculate profit.</p>
+                </article>
+
+                <article class="tool-card">
+                  <h3>Session Info</h3>
+                  <p>This is a simple HTML/Vercel version using local storage for login state, notes, and tasks.</p>
+                  <div class="tool-meta">Front-end only</div>
+                  <div class="tool-meta">Best for simple demo sites</div>
+                </article>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const PASSCODE = '12345';
+      const AUTH_KEY = 'iridiumflips_auth';
+      const TASKS_KEY = 'iridiumflips_tasks';
+      const NOTES_KEY = 'iridiumflips_notes';
+
+      const authScreen = document.getElementById('authScreen');
+      const appScreen = document.getElementById('appScreen');
+      const flipcode = document.getElementById('flipcode');
+      const loginBtn = document.getElementById('loginBtn');
+      const authStatus = document.getElementById('authStatus');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const navButtons = document.querySelectorAll('.nav-btn');
+      const panels = document.querySelectorAll('.panel');
+      const addTaskBtn = document.getElementById('addTaskBtn');
+      const taskTitle = document.getElementById('taskTitle');
+      const taskPriority = document.getElementById('taskPriority');
+      const taskList = document.getElementById('taskList');
+      const saveNoteBtn = document.getElementById('saveNoteBtn');
+      const noteTitle = document.getElementById('noteTitle');
+      const noteBody = document.getElementById('noteBody');
+      const notesList = document.getElementById('notesList');
+      const statTasks = document.getElementById('statTasks');
+      const statNotes = document.getElementById('statNotes');
+      const calcBtn = document.getElementById('calcBtn');
+      const buyPrice = document.getElementById('buyPrice');
+      const sellPrice = document.getElementById('sellPrice');
+      const calcResult = document.getElementById('calcResult');
+
+      function getTasks() {
+        return JSON.parse(localStorage.getItem(TASKS_KEY) || '[]');
+      }
+
+      function getNotes() {
+        return JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
+      }
+
+      function saveTasks(tasks) {
+        localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+      }
+
+      function saveNotes(notes) {
+        localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+      }
+
+      function updateStats() {
+        statTasks.textContent = getTasks().length;
+        statNotes.textContent = getNotes().length;
+      }
+
+      function showApp() {
+        authScreen.classList.add('hidden');
+        appScreen.classList.remove('hidden');
+        renderTasks();
+        renderNotes();
+        updateStats();
+      }
+
+      function showAuth() {
+        appScreen.classList.add('hidden');
+        authScreen.classList.remove('hidden');
+        flipcode.value = '';
+      }
+
+      function checkAuth() {
+        const isAuthed = localStorage.getItem(AUTH_KEY) === 'true';
+        if (isAuthed) showApp();
+        else showAuth();
+      }
+
+      loginBtn.addEventListener('click', function () {
+        const value = flipcode.value.trim();
+
+        authStatus.className = 'status';
+
+        if (!value) {
+          authStatus.textContent = 'Please enter your flipcode';
+          authStatus.classList.add('error');
+          return;
+        }
+
+        if (value === PASSCODE) {
+          localStorage.setItem(AUTH_KEY, 'true');
+          authStatus.textContent = 'Access granted';
+          authStatus.classList.add('success');
+          setTimeout(showApp, 350);
+        } else {
+          authStatus.textContent = 'Access denied';
+          authStatus.classList.add('error');
+        }
+      });
+
+      flipcode.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') loginBtn.click();
+      });
+
+      logoutBtn.addEventListener('click', function () {
+        localStorage.removeItem(AUTH_KEY);
+        showAuth();
+      });
+
+      refreshBtn.addEventListener('click', function () {
+        renderTasks();
+        renderNotes();
+        updateStats();
+      });
+
+      navButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          const target = button.dataset.panel;
+
+          navButtons.forEach(function (btn) {
+            btn.classList.remove('active');
+          });
+          panels.forEach(function (panel) {
+            panel.classList.remove('active');
+          });
+
+          button.classList.add('active');
+          document.getElementById(target).classList.add('active');
+        });
+      });
+
+      function renderTasks() {
+        const tasks = getTasks();
+        taskList.innerHTML = '';
+
+        if (!tasks.length) {
+          taskList.innerHTML = '<div class="task-item"><strong>No tasks yet</strong><div class="muted">Add your first task above.</div></div>';
+          updateStats();
+          return;
+        }
+
+        tasks.forEach(function (task, index) {
+          const item = document.createElement('div');
+          item.className = 'task-item';
+          item.innerHTML = `
+            <strong>${task.title}</strong>
+            <div class="muted">Priority: ${task.priority}</div>
+            <div style="margin-top:10px">
+              <button class="ghost-btn" data-task-delete="${index}">Delete</button>
+            </div>
+          `;
+          taskList.appendChild(item);
+        });
+
+        taskList.querySelectorAll('[data-task-delete]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const tasks = getTasks();
+            tasks.splice(Number(btn.dataset.taskDelete), 1);
+            saveTasks(tasks);
+            renderTasks();
+          });
+        });
+
+        updateStats();
+      }
+
+      addTaskBtn.addEventListener('click', function () {
+        const title = taskTitle.value.trim();
+        const priority = taskPriority.value;
+
+        if (!title) return;
+
+        const tasks = getTasks();
+        tasks.unshift({ title, priority });
+        saveTasks(tasks);
+        taskTitle.value = '';
+        taskPriority.value = 'Medium';
+        renderTasks();
+      });
+
+      function renderNotes() {
+        const notes = getNotes();
+        notesList.innerHTML = '';
+
+        if (!notes.length) {
+          notesList.innerHTML = '<div class="note-item"><strong>No notes yet</strong><div class="muted">Write your first private note above.</div></div>';
+          updateStats();
+          return;
+        }
+
+        notes.forEach(function (note, index) {
+          const item = document.createElement('div');
+          item.className = 'note-item';
+          item.innerHTML = `
+            <strong>${note.title}</strong>
+            <div>${note.body}</div>
+            <div style="margin-top:10px">
+              <button class="ghost-btn" data-note-delete="${index}">Delete</button>
+            </div>
+          `;
+          notesList.appendChild(item);
+        });
+
+        notesList.querySelectorAll('[data-note-delete]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const notes = getNotes();
+            notes.splice(Number(btn.dataset.noteDelete), 1);
+            saveNotes(notes);
+            renderNotes();
+          });
+        });
+
+        updateStats();
+      }
+
+      saveNoteBtn.addEventListener('click', function () {
+        const title = noteTitle.value.trim();
+        const body = noteBody.value.trim();
+
+        if (!title || !body) return;
+
+        const notes = getNotes();
+        notes.unshift({ title, body });
+        saveNotes(notes);
+        noteTitle.value = '';
+        noteBody.value = '';
+        renderNotes();
+      });
+
+      calcBtn.addEventListener('click', function () {
+        const buy = Number(buyPrice.value);
+        const sell = Number(sellPrice.value);
+
+        if (Number.isNaN(buy) || Number.isNaN(sell) || buyPrice.value === '' || sellPrice.value === '') {
+          calcResult.textContent = 'Please enter both buy and sell prices.';
+          return;
+        }
+
+        const profit = sell - buy;
+        const margin = buy === 0 ? 0 : ((profit / buy) * 100).toFixed(1);
+        calcResult.textContent = `Profit: $${profit.toFixed(2)} | Margin: ${margin}%`;
+      });
+
+      checkAuth();
+    </script>
+  </body>
+</html>
